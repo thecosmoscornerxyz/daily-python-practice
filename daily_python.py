@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import os
 from datetime import datetime
 base_dir = "/home/cosmos/Python/Daily"
