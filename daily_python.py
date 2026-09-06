@@ -1,5 +1,14 @@
+#!/usr/bin/env python3
+
 import os
+import sys
 from datetime import datetime
+
+# Add Signal_Link.py Path to File
+sys.path.append("/opt/signal_link")
+
+from signal_link import signal_link
+
 base_dir = "/home/cosmos/Python/Daily"
 
 today = datetime.now()
@@ -139,3 +148,5 @@ if not os.path.exists(while_cheatpath):
         f.write(while_cheatcontent)
 
 print(f"Created daily folder structure for {today.strftime('%Y-%m%d')}")
+
+signal_link("daily_python.py", "dailybox-prod-LXC")
