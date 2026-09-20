@@ -22,14 +22,14 @@ input_dir = os.path.join(day_dir, "input")
 print_dir = os.path.join(day_dir, "print")
 variable_dir = os.path.join(day_dir, "variable")
 requests_dir = os.path.join(day_dir, "requests")
-lists_dir = os.path.join(day_dir, "lists")
+ollama_dir = os.path.join(day_dir, "ollama")
 dictionary_dir = os.path.join(day_dir, "dictionary")
 function_dir = os.path.join(day_dir, "function")
 case_dir = os.path.join(day_dir, "case")
 file_dir = os.path.join(day_dir, "file_handling")
 subprocess_dir = os.path.join(day_dir, "subprocess")
 
-for path in [input_dir, print_dir, variable_dir, requests_dir, lists_dir, dictionary_dir, function_dir, case_dir, file_dir, subprocess_dir]:
+for path in [input_dir, print_dir, variable_dir, requests_dir, ollama_dir, dictionary_dir, function_dir, case_dir, file_dir, subprocess_dir]:
     os.makedirs(path, exist_ok=True)
 
 #======= Cheat Sheets =======#
@@ -93,20 +93,38 @@ if not os.path.exists(requests_cheatpath):
     with open(requests_cheatpath, "w") as f:
         f.write(requests_cheatcontent)
 
-lists_cheatpath = os.path.join(lists_dir, "cheatsheet.md")
-lists_cheatcontent = (
+ollama_cheatpath = os.path.join(ollama_dir, "cheatsheet.md")
+
+ollama_cheatcontent = (
     '#!/usr/bin/env python3\n\n'
-    'servers  = [\n'
-    '   "web01",\n'
-    '   "db01",\n'
-    ']\n\n'
-    'for server in servers:\n'
-    '   print(f"Checking: {server}")'
+    'import ollama\n\n'
+    'client = ollama.Client(\n'
+    '    host="http://172.16.10.62:11434"\n'
+    ')\n\n'
+    'messages = []\n\n'
+    'while True:\n'
+    '    user_input = input("You: ").strip()\n\n'
+    '    if user_input.lower() in ["exit", "quit"]:\n'
+    '        break\n\n'
+    '    messages.append({\n'
+    '        "role": "user",\n'
+    '        "content": user_input\n'
+    '    })\n\n'
+    '    response = client.chat(\n'
+    '        model="llama3.2",\n'
+    '        messages=messages\n'
+    '    )\n\n'
+    '    assistant_message = response["message"]["content"]\n\n'
+    '    print(f"AI: {assistant_message}")\n\n'
+    '    messages.append({\n'
+    '        "role": "assistant",\n'
+    '        "content": assistant_message\n'
+    '    })\n'
 )
 
-if not os.path.exists(lists_cheatpath):
-    with open(lists_cheatpath, "w") as f:
-        f.write(lists_cheatcontent)
+if not os.path.exists(ollama_cheatpath):
+    with open(ollama_cheatpath, "w") as f:
+        f.write(ollama_cheatcontent)
 
 dictionary_cheatpath = os.path.join(dictionary_dir, "cheatsheet.md")
 dictionary_cheatcontent = (
